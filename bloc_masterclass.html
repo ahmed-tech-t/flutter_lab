@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flutter BLoC Masterclass</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm 16mm 18mm 16mm;
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1e293b;
+      line-height: 1.6;
+      font-size: 13.5px;
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+    }
+    .header {
+      border-bottom: 3px solid #2563eb;
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+    }
+    .badge {
+      display: inline-block;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      margin-bottom: 8px;
+      border: 1px solid #bfdbfe;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0 0 6px 0;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      color: #64748b;
+      font-size: 13px;
+      margin: 0;
+    }
+    h2 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-top: 26px;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    h3 {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-top: 18px;
+      margin-bottom: 8px;
+    }
+    p {
+      margin: 0 0 10px 0;
+    }
+    .diagram-container {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 14px;
+      margin: 14px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      text-align: center;
+      page-break-inside: avoid;
+    }
+    .diagram-step {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 10px 14px;
+      width: 28%;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .diagram-step.brain {
+      border-color: #2563eb;
+      background: #eff6ff;
+    }
+    .step-title {
+      font-weight: 700;
+      font-size: 13px;
+      color: #0f172a;
+      margin-bottom: 2px;
+    }
+    .step-desc {
+      font-size: 11px;
+      color: #64748b;
+    }
+    .arrow {
+      font-size: 18px;
+      color: #64748b;
+      font-weight: bold;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 12px 0 16px 0;
+      page-break-inside: avoid;
+    }
+    .card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 10px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 13px;
+      color: #1e3a8a;
+      margin-bottom: 4px;
+    }
+    .card-text {
+      font-size: 11.5px;
+      color: #475569;
+      line-height: 1.45;
+    }
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      font-family: "Cascadia Code", "Consolas", "Courier New", monospace;
+      font-size: 11.5px;
+      line-height: 1.5;
+      padding: 12px 14px;
+      border-radius: 6px;
+      margin: 8px 0 14px 0;
+      overflow-x: auto;
+      page-break-inside: avoid;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    code {
+      font-family: "Cascadia Code", "Consolas", "Courier New", monospace;
+      font-size: 11.5px;
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+    /* Syntax coloring */
+    .kw { color: #f43f5e; font-weight: 600; }
+    .type { color: #38bdf8; font-weight: 600; }
+    .fn { color: #fbbf24; }
+    .str { color: #4ade80; }
+    .cm { color: #94a3b8; font-style: italic; }
+    .num { color: #c084fc; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 18px 0;
+      font-size: 12px;
+      page-break-inside: avoid;
+    }
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+    }
+    tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+    .callout {
+      border-left: 4px solid #3b82f6;
+      background: #eff6ff;
+      padding: 10px 14px;
+      border-radius: 0 6px 6px 0;
+      margin: 12px 0;
+      page-break-inside: avoid;
+    }
+    .callout-warning {
+      border-left-color: #f59e0b;
+      background: #fffbeb;
+    }
+    .callout-title {
+      font-weight: 700;
+      font-size: 12.5px;
+      margin-bottom: 4px;
+      color: #1e40af;
+    }
+    .callout-warning .callout-title {
+      color: #92400e;
+    }
+    .callout p {
+      margin: 0;
+      font-size: 12px;
+    }
+    .file-tag {
+      display: inline-block;
+      font-weight: 600;
+      font-size: 11px;
+      background: #e0e7ff;
+      color: #3730a3;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+    }
+    .rules-list {
+      padding-left: 20px;
+      margin: 8px 0 14px 0;
+    }
+    .rules-list li {
+      margin-bottom: 6px;
+      font-size: 12.5px;
+    }
+    .page-break {
+      page-break-before: always;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <span class="badge">Flutter Architectural Guide</span>
+    <h1>State Management Masterclass: BLoC Pattern</h1>
+    <p class="subtitle">Complete guide covering theoretical foundation, Equatable value equality, Flutter widgets, and implementation.</p>
+  </div>
+
+  <h2>1. The Core Mental Model</h2>
+  <p><strong>BLoC</strong> stands for <strong>Business Logic Component</strong>. It separates presentation from business logic using reactive <strong>Dart Streams</strong> with a strict unidirectional data flow.</p>
+
+  <div class="diagram-container">
+    <div class="diagram-step">
+      <div class="step-title">1. UI (Widgets)</div>
+      <div class="step-desc">Dispatches Events upon user interactions</div>
+    </div>
+    <div class="arrow">&rarr;</div>
+    <div class="diagram-step brain">
+      <div class="step-title">2. BLoC (Brain)</div>
+      <div class="step-desc">Receives event, executes logic, emits state</div>
+    </div>
+    <div class="arrow">&rarr;</div>
+    <div class="diagram-step">
+      <div class="step-title">3. State</div>
+      <div class="step-desc">Triggers targeted UI rebuild or listeners</div>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-title">Events (Input)</div>
+      <div class="card-text">Actions triggered by users or system (e.g., button clicks, scrolls, auth requests).</div>
+    </div>
+    <div class="card">
+      <div class="card-title">BLoC (Processor)</div>
+      <div class="card-text">The brain. Contains pure business logic, calls repositories/APIs, and produces states.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">States (Output)</div>
+      <div class="card-text">Immutable snapshots representing the UI at any point (e.g., Loading, Success, Count).</div>
+    </div>
+  </div>
+
+  <h2>2. Why Equatable is Essential</h2>
+  <p>By default, Dart checks <strong>reference equality</strong> (memory addresses). Two different class instances with identical properties evaluate as unequal:</p>
+  <pre><code><span class="type">CounterState</span>(<span class="num">1</span>) == <span class="type">CounterState</span>(<span class="num">1</span>); <span class="cm">// false without Equatable!</span></code></pre>
+  <p>With <code>Equatable</code>, Dart performs <strong>value equality</strong> based on the fields listed in <code>props</code>:</p>
+  <pre><code><span class="type">CounterState</span>(<span class="num">1</span>) == <span class="type">CounterState</span>(<span class="num">1</span>); <span class="cm">// true with Equatable!</span></code></pre>
+
+  <div class="callout">
+    <div class="callout-title">Why BLoC Requires This</div>
+    <p>BLoC skips UI rebuilds if a newly emitted state is identical to the current state. Without <code>Equatable</code>, BLoC would needlessly rebuild widgets even when the underlying data has not changed.</p>
+  </div>
+
+  <div class="page-break"></div>
+
+  <h2>3. Step-by-Step Implementation</h2>
+
+  <h3>Step 1: Define Events</h3>
+  <span class="file-tag">lib/bloc/counter_event.dart</span>
+  <pre><code><span class="kw">part of</span> <span class="str">'counter_bloc.dart'</span>;
+
+<span class="kw">sealed class</span> <span class="type">CounterEvent</span> <span class="kw">extends</span> <span class="type">Equatable</span> {
+  <span class="kw">const</span> <span class="type">CounterEvent</span>();
+
+  <span class="kw">@override</span>
+  <span class="type">List</span>&lt;<span class="type">Object?</span>&gt; <span class="kw">get</span> props =&gt; [];
+}
+
+<span class="kw">final class</span> <span class="type">CounterIncrementPressed</span> <span class="kw">extends</span> <span class="type">CounterEvent</span> {}
+
+<span class="kw">final class</span> <span class="type">CounterDecrementPressed</span> <span class="kw">extends</span> <span class="type">CounterEvent</span> {}
+
+<span class="kw">final class</span> <span class="type">CounterResetPressed</span> <span class="kw">extends</span> <span class="type">CounterEvent</span> {}</code></pre>
+
+  <h3>Step 2: Define States</h3>
+  <span class="file-tag">lib/bloc/counter_state.dart</span>
+  <pre><code><span class="kw">part of</span> <span class="str">'counter_bloc.dart'</span>;
+
+<span class="kw">sealed class</span> <span class="type">CounterState</span> <span class="kw">extends</span> <span class="type">Equatable</span> {
+  <span class="kw">final int</span> count;
+  <span class="kw">const</span> <span class="type">CounterState</span>({<span class="kw">this</span>.count = <span class="num">0</span>});
+
+  <span class="kw">@override</span>
+  <span class="type">List</span>&lt;<span class="type">Object?</span>&gt; <span class="kw">get</span> props =&gt; [count];
+}
+
+<span class="kw">final class</span> <span class="type">CounterInitial</span> <span class="kw">extends</span> <span class="type">CounterState</span> {
+  <span class="kw">const</span> <span class="type">CounterInitial</span>() : <span class="kw">super</span>(count: <span class="num">0</span>);
+}
+
+<span class="kw">final class</span> <span class="type">CounterUpdated</span> <span class="kw">extends</span> <span class="type">CounterState</span> {
+  <span class="kw">const</span> <span class="type">CounterUpdated</span>(<span class="type">int</span> count) : <span class="kw">super</span>(count: count);
+}</code></pre>
+
+  <h3>Step 3: Implement Logic</h3>
+  <span class="file-tag">lib/bloc/counter_bloc.dart</span>
+  <pre><code><span class="kw">import</span> <span class="str">'package:bloc/bloc.dart'</span>;
+<span class="kw">import</span> <span class="str">'package:equatable/equatable.dart'</span>;
+
+<span class="kw">part</span> <span class="str">'counter_event.dart'</span>;
+<span class="kw">part</span> <span class="str">'counter_state.dart'</span>;
+
+<span class="kw">class</span> <span class="type">CounterBloc</span> <span class="kw">extends</span> <span class="type">Bloc</span>&lt;<span class="type">CounterEvent</span>, <span class="type">CounterState</span>&gt; {
+  <span class="type">CounterBloc</span>() : <span class="kw">super</span>(<span class="kw">const</span> <span class="type">CounterInitial</span>()) {
+    <span class="fn">on</span>&lt;<span class="type">CounterIncrementPressed</span>&gt;((event, emit) {
+      <span class="fn">emit</span>(<span class="type">CounterUpdated</span>(state.count + <span class="num">1</span>));
+    });
+
+    <span class="fn">on</span>&lt;<span class="type">CounterDecrementPressed</span>&gt;((event, emit) {
+      <span class="fn">emit</span>(<span class="type">CounterUpdated</span>(state.count - <span class="num">1</span>));
+    });
+
+    <span class="fn">on</span>&lt;<span class="type">CounterResetPressed</span>&gt;((event, emit) {
+      <span class="fn">emit</span>(<span class="kw">const</span> <span class="type">CounterUpdated</span>(<span class="num">0</span>));
+    });
+  }
+}</code></pre>
+
+  <div class="page-break"></div>
+
+  <h3>Step 4: Providing and Consuming in UI</h3>
+  <span class="file-tag">lib/AppMaterial.dart</span>
+  <pre><code><span class="kw">import</span> <span class="str">'package:flutter/material.dart'</span>;
+<span class="kw">import</span> <span class="str">'package:flutter_bloc/flutter_bloc.dart'</span>;
+<span class="kw">import</span> <span class="str">'package:flutter_application_1/bloc/counter_bloc.dart'</span>;
+
+<span class="kw">class</span> <span class="type">AppMaterial</span> <span class="kw">extends</span> <span class="type">StatelessWidget</span> {
+  <span class="kw">const</span> <span class="type">AppMaterial</span>({<span class="kw">super</span>.key});
+
+  <span class="kw">@override</span>
+  <span class="type">Widget</span> <span class="fn">build</span>(<span class="type">BuildContext</span> context) {
+    <span class="cm">// 1. Provide the Bloc to the subtree</span>
+    <span class="kw">return</span> <span class="type">BlocProvider</span>(
+      create: (context) =&gt; <span class="type">CounterBloc</span>(),
+      child: <span class="kw">const</span> <span class="type">MaterialApp</span>(
+        debugShowCheckedModeBanner: <span class="kw">false</span>,
+        home: <span class="type">CounterScreen</span>(),
+      ),
+    );
+  }
+}
+
+<span class="kw">class</span> <span class="type">CounterScreen</span> <span class="kw">extends</span> <span class="type">StatelessWidget</span> {
+  <span class="kw">const</span> <span class="type">CounterScreen</span>({<span class="kw">super</span>.key});
+
+  <span class="kw">@override</span>
+  <span class="type">Widget</span> <span class="fn">build</span>(<span class="type">BuildContext</span> context) {
+    <span class="kw">return</span> <span class="type">Scaffold</span>(
+      backgroundColor: <span class="type">Colors</span>.amber,
+      body: <span class="type">Center</span>(
+        child: <span class="type">Row</span>(
+          mainAxisSize: <span class="type">MainAxisSize</span>.min,
+          children: [
+            <span class="type">ElevatedButton</span>(
+              onPressed: () =&gt; context.<span class="fn">read</span>&lt;<span class="type">CounterBloc</span>&gt;().<span class="fn">add</span>(<span class="type">CounterIncrementPressed</span>()),
+              child: <span class="kw">const</span> <span class="type">Icon</span>(<span class="type">Icons</span>.add),
+            ),
+            <span class="kw">const</span> <span class="type">SizedBox</span>(width: <span class="num">16</span>),
+            <span class="cm">// 2. Rebuild only the Counter Text upon state updates</span>
+            <span class="type">BlocBuilder</span>&lt;<span class="type">CounterBloc</span>, <span class="type">CounterState</span>&gt;(
+              builder: (context, state) {
+                <span class="kw">return</span> <span class="type">Text</span>(<span class="str">'${state.count}'</span>, style: <span class="kw">const</span> <span class="type">TextStyle</span>(fontSize: <span class="num">28</span>));
+              },
+            ),
+            <span class="kw">const</span> <span class="type">SizedBox</span>(width: <span class="num">16</span>),
+            <span class="type">ElevatedButton</span>(
+              onPressed: () =&gt; context.<span class="fn">read</span>&lt;<span class="type">CounterBloc</span>&gt;().<span class="fn">add</span>(<span class="type">CounterDecrementPressed</span>()),
+              child: <span class="kw">const</span> <span class="type">Icon</span>(<span class="type">Icons</span>.remove),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}</code></pre>
+
+  <h2>4. Core Flutter BLoC Widgets</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 22%;">Widget</th>
+        <th style="width: 38%;">Description</th>
+        <th style="width: 40%;">Primary Use Case</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>BlocProvider</code></td>
+        <td>Provides an instance of a Bloc down the widget tree. Handles lifecycle & auto-close.</td>
+        <td>Root screens, route definitions, or dependency injection.</td>
+      </tr>
+      <tr>
+        <td><code>BlocBuilder</code></td>
+        <td>Rebuilds its child UI in response to state transitions.</td>
+        <td>Pure UI rendering based on state snapshots.</td>
+      </tr>
+      <tr>
+        <td><code>BlocListener</code></td>
+        <td>Invokes a one-time callback whenever state changes (does NOT rebuild UI).</td>
+        <td>Navigation, SnackBars, Dialogs, Analytics tracking.</td>
+      </tr>
+      <tr>
+        <td><code>BlocConsumer</code></td>
+        <td>Combines both <code>BlocBuilder</code> and <code>BlocListener</code> into a single widget.</td>
+        <td>When a screen needs to rebuild AND execute side effects (e.g. show alert on failure).</td>
+      </tr>
+      <tr>
+        <td><code>BlocSelector</code></td>
+        <td>Filters rebuilds based on a specific subsection or property of state.</td>
+        <td>Optimizing high-frequency re-renders in large forms or lists.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Context Extensions</h3>
+  <ul class="rules-list">
+    <li><code>context.read&lt;T&gt;()</code>: Obtains the Bloc instance without subscribing to changes. Always use inside event handlers and callbacks (e.g., <code>onPressed</code>).</li>
+    <li><code>context.watch&lt;T&gt;()</code>: Obtains the Bloc and subscribes to rebuild the enclosing widget on every state change.</li>
+    <li><code>context.select&lt;T, R&gt;()</code>: Subscribes only to changes in a selected sub-value <code>R</code>.</li>
+  </ul>
+
+  <div class="page-break"></div>
+
+  <h2>5. BLoC vs Cubit Comparison</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">Feature</th>
+        <th style="width: 37%;">Cubit</th>
+        <th style="width: 38%;">BLoC</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Trigger Method</strong></td>
+        <td>Direct functions (<code>cubit.increment()</code>)</td>
+        <td>Events via stream (<code>bloc.add(Event())</code>)</td>
+      </tr>
+      <tr>
+        <td><strong>Boilerplate</strong></td>
+        <td>Minimal (only State classes)</td>
+        <td>Moderate (Event classes + State classes)</td>
+      </tr>
+      <tr>
+        <td><strong>Event Log / Trace</strong></td>
+        <td>Tracks state transitions only</td>
+        <td>Full Event-to-State audit trail</td>
+      </tr>
+      <tr>
+        <td><strong>Advanced Async</strong></td>
+        <td>Manual logic</td>
+        <td>Transformers (debounce, throttle, switchMap)</td>
+      </tr>
+      <tr>
+        <td><strong>Recommended For</strong></td>
+        <td>Simple UI logic, forms, toggles</td>
+        <td>Complex domains, event sourcing, real-time queues</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>6. Golden Rules & Best Practices</h2>
+  <div class="callout callout-warning">
+    <div class="callout-title">Critical Rules to Memorize</div>
+    <ul class="rules-list" style="margin: 0; padding-left: 18px;">
+      <li><strong>Never use <code>context.watch()</code> inside button callbacks</strong>: Always use <code>context.read()</code>. Calling <code>context.watch()</code> inside callbacks throws a runtime error.</li>
+      <li><strong>Never mutate states directly</strong>: States must always be immutable. Always emit a new instance (e.g., <code>emit(CounterUpdated(state.count + 1))</code>), never mutate fields in-place.</li>
+      <li><strong>Keep builders pure</strong>: Never navigate or show snackbars inside <code>BlocBuilder.builder</code>. Route and side-effect logic belongs exclusively in <code>BlocListener.listener</code>.</li>
+      <li><strong>Automatic Disposal</strong>: Always instantiate blocs using <code>BlocProvider(create: (ctx) =&gt; MyBloc())</code> so Flutter automatically disposes them when navigating away.</li>
+    </ul>
+  </div>
+
+  <div style="margin-top: 30px; padding-top: 10px; border-top: 1px solid #e2e8f0; font-size: 11px; color: #94a3b8; text-align: center;">
+    Flutter State Management Guide &bull; Generated for flutter_application_1 &bull; Ahmad Tech
+  </div>
+
+</body>
+</html>
