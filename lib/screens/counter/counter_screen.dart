@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/common/CElevatedButton.dart';
+import 'package:flutter_application_1/screens/counter/bloc/counter_bloc.dart';
 import 'package:flutter_application_1/screens/counter/widgets/counter_text.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CounterScreen extends StatelessWidget {
   const new({
@@ -30,9 +32,17 @@ class CounterScreen extends StatelessWidget {
                   Wrap(
                     spacing: 10,
                     children: [
-                      CElevatedButton(icon: Icons.add, onPressed: () {}),
-                      CounterText(counter: 40),
-                      CElevatedButton(icon: Icons.remove, onPressed: () {}),
+                      CElevatedButton(icon: Icons.add, onPressed: () {
+                        context.read<CounterBloc>().add(CounterIncremented());
+                      }),
+                      BlocBuilder<CounterBloc, CounterState>(
+                        builder: (context, state) {
+                          return CounterText(counter: state.counter);
+                        },
+                      ),
+                      CElevatedButton(icon: Icons.remove, onPressed: () {
+                        context.read<CounterBloc>().add(CounterDecremented());
+                      }),
                     ],
                   ),
                 ],

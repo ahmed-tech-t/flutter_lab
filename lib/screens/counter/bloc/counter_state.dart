@@ -5,7 +5,7 @@ sealed class CounterState extends Equatable {
   const CounterState({this.counter=0});
   
   @override
-  List<Object> get props => [];
+  List<Object> get props => [counter];
 }
 
 final class CounterInitial extends CounterState {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_application_1/screens/counter/bloc/counter_bloc.dart';
 import 'package:flutter_application_1/screens/counter/counter_screen.dart';
 
 class AppMaterial extends StatelessWidget {
@@ -10,7 +12,10 @@ class AppMaterial extends StatelessWidget {
       title: "first App",
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: CounterScreen(),
+        body: BlocProvider(
+          create: (context) => CounterBloc(),
+          child: const CounterScreen(),
+        ),
       ),
     );
   }
