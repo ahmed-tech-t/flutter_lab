@@ -12,44 +12,39 @@ class CounterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: const Color.fromARGB(255, 1, 1, 28),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 5),
-              decoration: BoxDecoration(
-                color: Colors.blueAccent,
-                borderRadius: BorderRadius.circular(25),
-              ),
-    
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Wrap(
-                    spacing: 10,
-                    children: [
-                      CElevatedButton(icon: Icons.add, onPressed: () {
-                        context.read<CounterBloc>().add(CounterIncremented());
-                      }),
-                      BlocBuilder<CounterBloc, CounterState>(
-                        builder: (context, state) {
-                          return CounterText(counter: state.counter);
-                        },
-                      ),
-                      CElevatedButton(icon: Icons.remove, onPressed: () {
-                        context.read<CounterBloc>().add(CounterDecremented());
-                      }),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            // ElevatedButton(onPressed: () {}, child: Text("Reset")),
-          ],
+    return Scaffold(
+      appBar: AppBar(
+        
+      ),
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+               Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [ 
+                   CElevatedButton(icon: Icons.lock_reset_outlined,size: Size(10, 10), onPressed: () {
+                      context.read<CounterBloc>().add(CounterReset());
+                    }) ,]),
+                    BlocBuilder<CounterBloc, CounterState>(
+                      builder: (context, state) {
+                        return CounterText(counter: state.counter);
+                      },
+                    ),
+                    CElevatedButton(icon: Icons.add,size: Size(200, 200), onPressed: () {
+                      context.read<CounterBloc>().add(CounterIncremented());
+                    }),
+                  ],
+                ),
+                            // ElevatedButton(onPressed: () {}, child: Text("Reset")),
+            ],
+          ),
         ),
       ),
     );
