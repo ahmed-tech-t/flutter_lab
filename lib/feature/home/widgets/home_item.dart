@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/common/CElevatedButton.dart';
-import 'package:flutter_application_1/screens/home/model/home_item_model.dart';
+import 'package:flutter_application_1/feature/home/domain/model/home_item_model.dart';
 import 'package:flutter_application_1/utils/ext/responsive_extension.dart';
 import 'package:get/get.dart';
 

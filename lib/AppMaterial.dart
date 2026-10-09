@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/navigation/app_routes.dart';
-import 'package:flutter_application_1/screens/ui/theme.dart';
+import 'package:flutter_application_1/core/theme/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_application_1/screens/counter/bloc/counter_bloc.dart';
 import 'package:flutter_application_1/screens/counter/counter_screen.dart';

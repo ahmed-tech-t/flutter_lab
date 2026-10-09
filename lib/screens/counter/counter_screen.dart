@@ -32,9 +32,9 @@ class CounterScreen extends StatelessWidget {
                    CElevatedButton(icon: Icons.lock_reset_outlined,size: Size(10, 10), onPressed: () {
                       context.read<CounterBloc>().add(CounterReset());
                     }) ,]),
-                    BlocBuilder<CounterBloc, CounterState>(
-                      builder: (context, state) {
-                        return CounterText(counter: state.counter);
+                    BlocListener<CounterBloc, CounterState>(
+                      listener: (context, state) {
+                        // Handle state changes if needed
                       },
                     ),
                     CElevatedButton(icon: Icons.add,size: Size(200, 200), onPressed: () {

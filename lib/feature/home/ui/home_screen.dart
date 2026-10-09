@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/home/model/home_item_model.dart';
-import 'package:flutter_application_1/screens/home/widgets/home_item.dart';
+import 'package:flutter_application_1/feature/home/domain/model/home_item_model.dart';
+import 'package:flutter_application_1/feature/home/ui/widgets/home_item.dart';
 import 'package:flutter_application_1/screens/navigation/app_routes.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
