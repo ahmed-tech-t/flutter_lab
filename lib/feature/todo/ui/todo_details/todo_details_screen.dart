@@ -4,13 +4,13 @@ import 'package:flutter_application_1/feature/todo/data/repositories/todo_reposi
 import 'package:flutter_application_1/feature/todo/domain/models/todo.dart';
 import 'package:flutter_application_1/feature/todo/domain/models/todo_status.dart';
 import 'package:flutter_application_1/feature/todo/ui/todo_details/bloc/todo_details_cubit.dart';
+import 'package:flutter_application_1/core/theme/app_decorations.dart';
 import 'package:flutter_application_1/feature/todo/ui/widgets/completed_badge.dart';
 import 'package:flutter_application_1/feature/todo/ui/widgets/due_date_picker_tile.dart';
-import 'package:flutter_application_1/feature/todo/ui/widgets/primary_action_button.dart';
-import 'package:flutter_application_1/feature/todo/ui/widgets/section_header.dart';
 import 'package:flutter_application_1/feature/todo/ui/widgets/status_widget.dart';
-import 'package:flutter_application_1/feature/todo/ui/widgets/todo_decorations.dart';
 import 'package:flutter_application_1/screens/common/app_snack_bar.dart';
+import 'package:flutter_application_1/screens/common/primary_action_button.dart';
+import 'package:flutter_application_1/screens/common/section_header.dart';
 import 'package:flutter_application_1/screens/common/widget_preview.dart';
 import 'package:flutter_application_1/screens/navigation/app_routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -146,7 +146,7 @@ class TodoDetailsScreen extends StatelessWidget {
                     width: double.infinity,
                     constraints: const BoxConstraints(minHeight: 120),
                     padding: const EdgeInsets.all(AppSpacing.lg),
-                    decoration: TodoDecorations.cardDecoration(),
+                    decoration: AppDecorations.cardDecoration(),
                     child: Text(
                       todo.body.isEmpty ? 'No description provided.' : todo.body,
                       style: TextStyle(

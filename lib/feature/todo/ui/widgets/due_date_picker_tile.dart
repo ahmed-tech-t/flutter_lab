@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/theme/app_spacing.dart';
-import 'package:flutter_application_1/feature/todo/ui/widgets/todo_decorations.dart';
+import 'package:flutter_application_1/core/theme/app_decorations.dart';
 import 'package:flutter_application_1/screens/common/app_date_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -40,7 +40,7 @@ class DueDatePickerTile extends StatelessWidget {
           horizontal: AppSpacing.lg,
           vertical: AppSpacing.md,
         ),
-        decoration: TodoDecorations.cardDecoration(),
+        decoration: AppDecorations.cardDecoration(),
         child: Row(
           children: [
             const Icon(Icons.calendar_today, size: 20, color: Colors.white),
