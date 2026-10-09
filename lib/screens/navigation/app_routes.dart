@@ -1,5 +1,3 @@
-// ignore_for_file: constant_identifier_names
-
 import 'package:flutter_application_1/feature/todo/data/repositories/todo_repository_impl.dart';
 import 'package:flutter_application_1/feature/todo/ui/bloc/todo_list_bloc.dart';
 import 'package:flutter_application_1/feature/todo/ui/todo_list_screen.dart';

@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/feature/todo/domain/models/todo.dart';
-import 'package:flutter_application_1/feature/todo/domain/models/todo_filter.dart';
-import 'package:flutter_application_1/feature/todo/domain/models/todo_status.dart';
+
 import 'package:flutter_application_1/feature/todo/data/repositories/todo_repository_impl.dart';
 import 'package:flutter_application_1/feature/todo/ui/bloc/todo_list_bloc.dart';
 import 'package:flutter_application_1/feature/todo/ui/widgets/todo_item_widget.dart';
 import 'package:flutter_application_1/screens/common/widget_preview.dart';
 import 'package:flutter_application_1/screens/navigation/app_routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:get/route_manager.dart';
 
