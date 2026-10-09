@@ -32,12 +32,14 @@ class PrioritySelectorWidget extends StatelessWidget {
                 duration: const Duration(milliseconds: 200),
                 padding: const EdgeInsets.all(AppSpacing.xs),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppSpacing.lg),
+                  borderRadius: BorderRadius.circular(AppSpacing.xxl),
                   border: Border.all(
                     color: isSelected ? status.color : Colors.transparent,
                     width: 2.0,
                   ),
-                  color: isSelected ? status.color.withAlpha(30) : Colors.transparent,
+                  color: isSelected
+                      ? status.color.withAlpha(30)
+                      : Colors.transparent,
                 ),
                 child: Center(
                   child: Opacity(
@@ -53,4 +55,3 @@ class PrioritySelectorWidget extends StatelessWidget {
     );
   }
 }
-

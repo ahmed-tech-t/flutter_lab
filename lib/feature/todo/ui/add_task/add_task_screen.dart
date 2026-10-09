@@ -3,6 +3,7 @@ import 'package:flutter_application_1/core/theme/app_spacing.dart';
 import 'package:flutter_application_1/feature/todo/data/repositories/todo_repository_impl.dart';
 import 'package:flutter_application_1/feature/todo/ui/add_task/bloc/add_task_cubit.dart';
 import 'package:flutter_application_1/feature/todo/ui/add_task/bloc/add_task_state.dart';
+import 'package:flutter_application_1/feature/todo/ui/add_task/widgets/custom_text_form_field.dart';
 import 'package:flutter_application_1/feature/todo/ui/add_task/widgets/priority_selector_widget.dart';
 import 'package:flutter_application_1/screens/common/widget_preview.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -80,72 +81,24 @@ class AddTaskScreen extends StatelessWidget {
                 const SizedBox(height: AppSpacing.lg),
 
                 // Title Input
-                Text(
-                  'Task Title',
-                  style: Theme.of(context).textTheme.titleSmall
-                      ?.copyWith(fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                TextFormField(
+                CustomTextFormField(
+                  label: 'Task Title',
                   initialValue: state.title,
                   onChanged: cubit.updateTitle,
                   enabled: !isLoading,
-                  style: const TextStyle(color: Colors.white, fontSize: 16),
-                  cursorColor: Colors.blueAccent,
-                  decoration: InputDecoration(
-                    hintText: 'e.g. Complete Flutter lab',
-                    hintStyle: TextStyle(color: Colors.white.withAlpha(120)),
-                    filled: true,
-                    fillColor: Colors.white.withAlpha(20),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppSpacing.md),
-                      borderSide: BorderSide(color: Colors.white.withAlpha(50)),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppSpacing.md),
-                      borderSide: BorderSide(color: Colors.white.withAlpha(50)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppSpacing.md),
-                      borderSide: const BorderSide(color: Colors.blueAccent, width: 1.5),
-                    ),
-                  ),
+                  hintText: 'e.g. Complete Flutter lab',
                 ),
 
                 const SizedBox(height: AppSpacing.lg),
 
                 // Description Input
-                Text(
-                  'Description',
-                  style: Theme.of(context).textTheme.titleSmall
-                      ?.copyWith(fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                TextFormField(
+                CustomTextFormField(
+                  label: 'Description',
                   initialValue: state.body,
                   onChanged: cubit.updateBody,
                   enabled: !isLoading,
                   maxLines: 3,
-                  style: const TextStyle(color: Colors.white, fontSize: 15),
-                  cursorColor: Colors.blueAccent,
-                  decoration: InputDecoration(
-                    hintText: 'Add details about this task...',
-                    hintStyle: TextStyle(color: Colors.white.withAlpha(120)),
-                    filled: true,
-                    fillColor: Colors.white.withAlpha(20),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppSpacing.md),
-                      borderSide: BorderSide(color: Colors.white.withAlpha(50)),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppSpacing.md),
-                      borderSide: BorderSide(color: Colors.white.withAlpha(50)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppSpacing.md),
-                      borderSide: const BorderSide(color: Colors.blueAccent, width: 1.5),
-                    ),
-                  ),
+                  hintText: 'Add details about this task...',
                 ),
 
                 const SizedBox(height: AppSpacing.lg),
@@ -153,8 +106,10 @@ class AddTaskScreen extends StatelessWidget {
                 // Priority Selector
                 Text(
                   'Priority',
-                  style: Theme.of(context).textTheme.titleSmall
-                      ?.copyWith(fontWeight: FontWeight.bold, color: Colors.white),
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 PrioritySelectorWidget(
@@ -167,8 +122,10 @@ class AddTaskScreen extends StatelessWidget {
                 // Due Date Tile
                 Text(
                   'Due Date',
-                  style: Theme.of(context).textTheme.titleSmall
-                      ?.copyWith(fontWeight: FontWeight.bold, color: Colors.white),
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 InkWell(
@@ -191,14 +148,24 @@ class AddTaskScreen extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.calendar_today, size: 20, color: Colors.white),
+                        const Icon(
+                          Icons.calendar_today,
+                          size: 20,
+                          color: Colors.white,
+                        ),
                         const SizedBox(width: AppSpacing.md),
                         Text(
                           DateFormat('dd/MM/yyyy').format(state.date),
-                          style: const TextStyle(fontSize: 16, color: Colors.white),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
                         ),
                         const Spacer(),
-                        const Icon(Icons.arrow_drop_down, color: Colors.white70),
+                        const Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.white70,
+                        ),
                       ],
                     ),
                   ),

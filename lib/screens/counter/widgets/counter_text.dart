@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/utils/ext/responsive_extension.dart';
-import 'package:get/get.dart';
 
 class CounterText extends StatelessWidget {
   final int counter;
@@ -12,7 +11,7 @@ class CounterText extends StatelessWidget {
       padding: EdgeInsets.all(16),
       height: context.hp(20),
       width: context.wp(20),
-      decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.white),
+      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
       child: Center(
         child: Text(
           counter.toString(),
@@ -26,4 +25,3 @@ class CounterText extends StatelessWidget {
     );
   }
 }
-
