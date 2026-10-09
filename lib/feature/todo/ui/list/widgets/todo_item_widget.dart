@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/theme/app_spacing.dart';
 import 'package:flutter_application_1/feature/todo/domain/models/todo.dart';
 import 'package:flutter_application_1/feature/todo/domain/models/todo_status.dart';
-import 'package:flutter_application_1/feature/todo/ui/widgets/complete_Status.dart';
+import 'package:flutter_application_1/feature/todo/ui/widgets/complete_status.dart';
 import 'package:flutter_application_1/feature/todo/ui/widgets/status_widget.dart';
 import 'package:flutter_application_1/screens/common/widget_preview.dart';
 
@@ -25,7 +25,9 @@ class TodoItemWidget extends StatelessWidget {
       color: todo.status.color.withAlpha(50),
       elevation: 0,
       clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppSpacing.lg)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppSpacing.lg),
+      ),
       child: InkWell(
         onTap: onTap,
         child: Padding(
@@ -36,10 +38,6 @@ class TodoItemWidget extends StatelessWidget {
               CompleteStatus(status: todo.status),
               const SizedBox(width: AppSpacing.md),
               Expanded(child: _ItemInfo(todo: todo)),
-              IconButton(
-                icon: const Icon(Icons.more_vert),
-                onPressed: onMorePressed,
-              ),
             ],
           ),
         ),
@@ -89,7 +87,11 @@ class _ItemInfo extends StatelessWidget {
                 color: Colors.white70,
                 decoration: decoration,
               ) ??
-              TextStyle(fontSize: 14, decoration: decoration, color: Colors.white70),
+              TextStyle(
+                fontSize: 14,
+                decoration: decoration,
+                color: Colors.white70,
+              ),
         ),
         const SizedBox(height: AppSpacing.sm),
         Row(

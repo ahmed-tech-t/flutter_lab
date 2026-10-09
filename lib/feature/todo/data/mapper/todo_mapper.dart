@@ -16,6 +16,7 @@ extension TodoToHiveModel on Todo {
       body: body,
       statusName: statusKey,
       dateMillis: date?.millisecondsSinceEpoch,
+      isCompleted: status.isComplete,
     );
   }
 }
@@ -23,9 +24,9 @@ extension TodoToHiveModel on Todo {
 extension TodoHiveModelToEntity on TodoHiveModel {
   Todo toEntity() {
     final TodoStatus status = switch (statusName) {
-      'medium' => Medium(),
-      'high' => High(),
-      _ => Low(),
+      'medium' => Medium(isComplete: isCompleted),
+      'high' => High(isComplete: isCompleted),
+      _ => Low(isComplete: isCompleted),
     };
 
     return Todo(

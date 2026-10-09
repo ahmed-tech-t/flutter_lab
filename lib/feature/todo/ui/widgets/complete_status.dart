@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/feature/todo/domain/models/todo_status.dart';
 import 'package:flutter_application_1/screens/common/widget_preview.dart';
 
+/// Circular completion check indicator widget.
 class CompleteStatus extends StatelessWidget {
   final TodoStatus status;
+
   const CompleteStatus({super.key, required this.status});
 
   @override
@@ -15,11 +17,11 @@ class CompleteStatus extends StatelessWidget {
           ? CompleteStatusContainerWidget(
               size: const Size(20, 20),
               color: status.color,
-              child: Icon(Icons.check, color: Colors.white, size: 15),
+              child: const Icon(Icons.check, color: Colors.white, size: 15),
             )
-          : CompleteStatusContainerWidget(
+          : const CompleteStatusContainerWidget(
               color: Colors.black,
-              size: const Size(20, 20),
+              size: Size(20, 20),
               isTransparent: true,
             ),
     );
@@ -31,6 +33,7 @@ class CompleteStatusContainerWidget extends StatelessWidget {
   final Widget? child;
   final Color color;
   final bool isTransparent;
+
   const CompleteStatusContainerWidget({
     super.key,
     this.size = const Size(40, 40),

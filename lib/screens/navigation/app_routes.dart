@@ -1,13 +1,18 @@
 import 'package:flutter_application_1/feature/todo/data/repositories/todo_repository_impl.dart';
+import 'package:flutter_application_1/feature/todo/domain/models/todo.dart';
 import 'package:flutter_application_1/feature/todo/ui/add_task/add_task_screen.dart';
 import 'package:flutter_application_1/feature/todo/ui/add_task/bloc/add_task_cubit.dart';
-import 'package:flutter_application_1/feature/todo/ui/bloc/todo_list_bloc.dart';
-import 'package:flutter_application_1/feature/todo/ui/todo_list_screen.dart';
+import 'package:flutter_application_1/feature/todo/ui/edit_task/bloc/edit_task_cubit.dart';
+import 'package:flutter_application_1/feature/todo/ui/edit_task/edit_task_screen.dart';
+import 'package:flutter_application_1/feature/todo/ui/list/bloc/todo_list_bloc.dart';
+import 'package:flutter_application_1/feature/todo/ui/todo_details/bloc/todo_details_cubit.dart';
+import 'package:flutter_application_1/feature/todo/ui/todo_details/todo_details_screen.dart';
+import 'package:flutter_application_1/feature/todo/ui/list/todo_list_screen.dart';
 import 'package:flutter_application_1/screens/counter/bloc/counter_bloc.dart';
 import 'package:flutter_application_1/screens/counter/counter_screen.dart';
 import 'package:flutter_application_1/feature/home/ui/home_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:get/get.dart';
 
 class AppRoutes {
   static const HOME = '/home';
@@ -38,6 +43,26 @@ class AppRoutes {
       page: () => BlocProvider(
         create: (context) => AddTaskCubit(TodoRepositoryImpl()),
         child: const AddTaskScreen(),
+      ),
+    ),
+    GetPage(
+      name: '/todo_details/:id',
+      page: () => BlocProvider(
+        create: (context) => TodoDetailsCubit(
+          todo: Get.arguments as Todo,
+          repository: TodoRepositoryImpl(),
+        ),
+        child: const TodoDetailsScreen(),
+      ),
+    ),
+    GetPage(
+      name: '/todo_edit/:id',
+      page: () => BlocProvider(
+        create: (context) => EditTaskCubit(
+          initialTodo: Get.arguments as Todo,
+          repository: TodoRepositoryImpl(),
+        ),
+        child: const EditTaskScreen(),
       ),
     ),
   ];

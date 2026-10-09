@@ -3,6 +3,7 @@ import 'package:flutter_application_1/core/theme/app_spacing.dart';
 import 'package:flutter_application_1/feature/todo/domain/models/todo_status.dart';
 import 'package:flutter_application_1/feature/todo/ui/widgets/status_widget.dart';
 
+/// Reusable priority selector pills row (Low, Medium, High).
 class PrioritySelectorWidget extends StatelessWidget {
   final TodoStatus selectedStatus;
   final ValueChanged<TodoStatus> onStatusSelected;

@@ -5,7 +5,16 @@ sealed class TodoStatus {
   final String value;
   final bool isComplete;
   
-  TodoStatus({required this.color, required this.value,required this.isComplete}); 
+  TodoStatus({required this.color, required this.value, required this.isComplete}); 
+
+  TodoStatus toggleComplete() {
+    final next = !isComplete;
+    return switch (this) {
+      Low() => Low(isComplete: next),
+      Medium() => Medium(isComplete: next),
+      High() => High(isComplete: next),
+    };
+  }
 }
 
 final class Low extends TodoStatus {

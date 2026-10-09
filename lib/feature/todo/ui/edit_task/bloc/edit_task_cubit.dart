@@ -1,13 +1,18 @@
+import 'package:flutter_application_1/core/enums/submission_status.dart';
 import 'package:flutter_application_1/feature/todo/domain/models/todo.dart';
 import 'package:flutter_application_1/feature/todo/domain/models/todo_status.dart';
 import 'package:flutter_application_1/feature/todo/domain/repositories/todo_repository.dart';
-import 'package:flutter_application_1/feature/todo/ui/add_task/bloc/add_task_state.dart';
+import 'package:flutter_application_1/feature/todo/ui/edit_task/bloc/edit_task_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AddTaskCubit extends Cubit<AddTaskState> {
-  final TodoRepository _repository;
+export 'edit_task_state.dart';
 
-  AddTaskCubit(this._repository) : super(AddTaskState.initial());
+class EditTaskCubit extends Cubit<EditTaskState> {
+  final TodoRepository repository;
+  final Todo initialTodo;
+
+  EditTaskCubit({required this.initialTodo, required this.repository})
+    : super(EditTaskState.fromTodo(initialTodo));
 
   void updateTitle(String title) {
     emit(state.copyWith(title: title, errorMessage: null));
@@ -25,7 +30,7 @@ class AddTaskCubit extends Cubit<AddTaskState> {
     emit(state.copyWith(date: date));
   }
 
-  Future<void> submitTask() async {
+  Future<void> saveChanges() async {
     final title = state.title.trim();
     if (title.isEmpty) {
       emit(
@@ -40,20 +45,25 @@ class AddTaskCubit extends Cubit<AddTaskState> {
     emit(state.copyWith(submissionStatus: SubmissionStatus.loading));
 
     try {
-      final newTodo = Todo(
+      final updatedTodo = initialTodo.copyWith(
         title: title,
         body: state.body.trim(),
         status: state.status,
         date: state.date,
       );
 
-      await _repository.addTodo(newTodo);
-      emit(state.copyWith(submissionStatus: SubmissionStatus.success));
+      await repository.updateTodo(updatedTodo);
+      emit(
+        state.copyWith(
+          submissionStatus: SubmissionStatus.success,
+          updatedTodo: updatedTodo,
+        ),
+      );
     } catch (e) {
       emit(
         state.copyWith(
           submissionStatus: SubmissionStatus.failure,
-          errorMessage: 'Failed to save task: ${e.toString()}',
+          errorMessage: 'Failed to update task: ${e.toString()}',
         ),
       );
     }

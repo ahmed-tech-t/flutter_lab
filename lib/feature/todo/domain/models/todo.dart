@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter_application_1/feature/todo/domain/models/todo_status.dart';
 import 'package:intl/intl.dart';
 
@@ -16,10 +14,26 @@ class Todo {
     required this.title,
     required this.status,
     this.date,
-  }) : id = id ?? DateTime.now().millisecondsSinceEpoch;
+  }) : id = (id ?? DateTime.now().microsecondsSinceEpoch) % 0xFFFFFFFF;
 
   String getDate() {
-    DateTime now = DateTime.now();
-    return DateFormat('dd/MM/yyyy').format(now); // 08/10/2026
+    final d = date ?? DateTime.now();
+    return DateFormat('dd/MM/yyyy').format(d);
+  }
+
+  Todo copyWith({
+    int? id,
+    String? title,
+    String? body,
+    DateTime? date,
+    TodoStatus? status,
+  }) {
+    return Todo(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      body: body ?? this.body,
+      date: date ?? this.date,
+      status: status ?? this.status,
+    );
   }
 }

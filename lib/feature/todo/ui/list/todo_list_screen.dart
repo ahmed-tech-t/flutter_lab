@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_application_1/feature/todo/data/repositories/todo_repository_impl.dart';
-import 'package:flutter_application_1/feature/todo/ui/bloc/todo_list_bloc.dart';
-import 'package:flutter_application_1/feature/todo/ui/widgets/todo_item_widget.dart';
+import 'package:flutter_application_1/feature/todo/ui/list/bloc/todo_list_bloc.dart';
+import 'package:flutter_application_1/feature/todo/ui/list/widgets/todo_item_widget.dart';
 import 'package:flutter_application_1/screens/common/widget_preview.dart';
 import 'package:flutter_application_1/screens/navigation/app_routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,12 +18,7 @@ class TodoListScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('My Tasks'), centerTitle: true),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.blueAccent,
-        onPressed: () async {
-          final result = await Get.toNamed(AppRoutes.NEW_TASK);
-          if (result == true && context.mounted) {
-            context.read<TodoListBloc>().loadTodos();
-          }
-        },
+        onPressed: () => Get.toNamed(AppRoutes.NEW_TASK),
         icon: const Icon(Icons.add, color: Colors.white),
         label: Text(
           'Add Task',
@@ -70,9 +65,10 @@ class TodoListScreen extends StatelessWidget {
                 final todo = state.items[index];
                 return TodoItemWidget(
                   todo: todo,
-                  onTap: () {
-                    // Navigate or select task
-                  },
+                  onTap: () => Get.toNamed(
+                    AppRoutes.todoDetails(todo.id.toString()),
+                    arguments: todo,
+                  ),
                 );
               },
             );

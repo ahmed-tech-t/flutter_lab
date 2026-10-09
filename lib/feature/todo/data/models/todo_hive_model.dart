@@ -19,11 +19,15 @@ class TodoHiveModel extends HiveObject {
   @HiveField(4)
   final int? dateMillis;
 
+  @HiveField(5)
+  final bool isCompleted;
+
   TodoHiveModel({
     required this.id,
     required this.title,
     required this.body,
     required this.statusName,
     this.dateMillis,
+    this.isCompleted = false,
   });
 }

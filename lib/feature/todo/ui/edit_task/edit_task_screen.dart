@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/theme/app_spacing.dart';
 import 'package:flutter_application_1/feature/todo/data/repositories/todo_repository_impl.dart';
-import 'package:flutter_application_1/feature/todo/ui/add_task/bloc/add_task_cubit.dart';
-import 'package:flutter_application_1/feature/todo/ui/add_task/bloc/add_task_state.dart';
+import 'package:flutter_application_1/feature/todo/domain/models/todo.dart';
+import 'package:flutter_application_1/feature/todo/domain/models/todo_status.dart';
+import 'package:flutter_application_1/feature/todo/ui/edit_task/bloc/edit_task_cubit.dart';
 import 'package:flutter_application_1/feature/todo/ui/widgets/custom_text_form_field.dart';
 import 'package:flutter_application_1/feature/todo/ui/widgets/due_date_picker_tile.dart';
 import 'package:flutter_application_1/feature/todo/ui/widgets/primary_action_button.dart';
@@ -13,20 +14,20 @@ import 'package:flutter_application_1/screens/common/widget_preview.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
-class AddTaskScreen extends StatelessWidget {
-  const AddTaskScreen({super.key});
+class EditTaskScreen extends StatelessWidget {
+  const EditTaskScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<AddTaskCubit>();
+    final cubit = context.read<EditTaskCubit>();
 
-    return BlocConsumer<AddTaskCubit, AddTaskState>(
+    return BlocConsumer<EditTaskCubit, EditTaskState>(
       listenWhen: (previous, current) =>
           previous.submissionStatus != current.submissionStatus,
       listener: (context, state) {
         if (state.submissionStatus.isSuccess) {
-          Get.back();
-          AppSnackBar.showSuccess(context, 'Task added successfully!');
+          Get.back(result: state.updatedTodo);
+          AppSnackBar.showSuccess(context, 'Task updated successfully!');
         } else if (state.submissionStatus.isFailure &&
             state.errorMessage != null) {
           AppSnackBar.showError(context, state.errorMessage!);
@@ -36,7 +37,7 @@ class AddTaskScreen extends StatelessWidget {
         final isLoading = state.submissionStatus.isLoading;
 
         return Scaffold(
-          appBar: AppBar(title: const Text('Add New Task'), centerTitle: true),
+          appBar: AppBar(title: const Text('Edit Task'), centerTitle: true),
           body: SingleChildScrollView(
             padding: AppSpacing.screenPadding,
             child: Column(
@@ -88,9 +89,9 @@ class AddTaskScreen extends StatelessWidget {
 
                 // Submit Button
                 PrimaryActionButton(
-                  text: 'Save Task',
+                  text: 'Save Changes',
                   isLoading: isLoading,
-                  onPressed: cubit.submitTask,
+                  onPressed: cubit.saveChanges,
                 ),
               ],
             ),
@@ -105,10 +106,19 @@ class AddTaskScreen extends StatelessWidget {
 void main() {
   runApp(
     WidgetPreview(
-      title: 'Add Task Screen Preview',
+      title: 'Edit Task Screen Preview',
       child: BlocProvider(
-        create: (context) => AddTaskCubit(TodoRepositoryImpl()),
-        child: const AddTaskScreen(),
+        create: (context) => EditTaskCubit(
+          initialTodo: Todo(
+            id: 1,
+            title: 'Sample Task to Edit',
+            body: 'Here is the description being modified.',
+            status: Medium(),
+            date: DateTime.now().add(const Duration(days: 2)),
+          ),
+          repository: TodoRepositoryImpl(),
+        ),
+        child: const EditTaskScreen(),
       ),
     ),
   );

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:equatable/equatable.dart';
 
 import 'package:flutter_application_1/feature/todo/domain/models/todo.dart';
@@ -10,25 +11,27 @@ part 'todo_list_state.dart';
 
 class TodoListBloc extends Cubit<TodoListState> {
   final TodoRepository _repository;
+  StreamSubscription<List<Todo>>? _todosSubscription;
 
   TodoListBloc(this._repository) : super(Initial()) {
-    loadTodos();
+    _subscribeToTodos();
   }
 
-  Future<void> loadTodos() async {
+  void _subscribeToTodos() {
     emit(Loading());
-    try {
-      final todos = await _repository.getTodos();
-      emit(Success(todos, TodoFilter.all));
-    } catch (e) {
-      emit(Error("Failed to load tasks: ${e.toString()}"));
-    }
+    _todosSubscription = _repository.watchTodos().listen(
+      (todos) {
+        emit(Success(todos, TodoFilter.all));
+      },
+      onError: (error) {
+        emit(Error("Failed to load tasks: ${error.toString()}"));
+      },
+    );
   }
 
   Future<void> addTodo(Todo todo) async {
     try {
       await _repository.addTodo(todo);
-      await loadTodos();
     } catch (e) {
       emit(Error("Failed to add task: ${e.toString()}"));
     }
@@ -37,9 +40,14 @@ class TodoListBloc extends Cubit<TodoListState> {
   Future<void> deleteTodo(int id) async {
     try {
       await _repository.deleteTodo(id);
-      await loadTodos();
     } catch (e) {
       emit(Error("Failed to delete task: ${e.toString()}"));
     }
+  }
+
+  @override
+  Future<void> close() {
+    _todosSubscription?.cancel();
+    return super.close();
   }
 }
