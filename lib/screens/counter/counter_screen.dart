@@ -6,7 +6,7 @@ import 'package:flutter_application_1/screens/counter/widgets/counter_text.dart'
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CounterScreen extends StatelessWidget {
-  const new({
+  const CounterScreen({
     super.key,
   });
 

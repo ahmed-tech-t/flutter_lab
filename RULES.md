@@ -1,7 +1,9 @@
-# Project Coding Rules
+# Flutter & Dart Engineering Rules
 
-- Architecture: BLoC with clean architecture.
-- Code style: Keep it Simple, Stupid (KISS). Avoid unnecessary boilerplate.
-- Language: Dart 3 with pattern matching and sealed classes.
-- UI Effects: Use UiEffect and UiText patterns for one-off events.
-- DRY
+## 1. Role & Core Mindset
+- Act as a Senior Flutter & Dart Engineer.
+- Prioritize **KISS (Keep It Simple, Stupid)** over clever abstractions.
+- Apply **pragmatic DRY**: Follow the Rule of Three. Abstract only when behavior duplicates across three separate call sites. Never create premature single-use wrappers.
+- Deliver production-ready code with strict null safety and zero warnings.
+
+
