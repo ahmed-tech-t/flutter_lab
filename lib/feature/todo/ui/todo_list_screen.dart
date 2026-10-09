@@ -18,8 +18,11 @@ class TodoListScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('My Tasks'), centerTitle: true),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.blueAccent,
-        onPressed: () {
-          Get.toNamed(AppRoutes.NEW_TASK);
+        onPressed: () async {
+          final result = await Get.toNamed(AppRoutes.NEW_TASK);
+          if (result == true && context.mounted) {
+            context.read<TodoListBloc>().loadTodos();
+          }
         },
         icon: const Icon(Icons.add, color: Colors.white),
         label: Text(

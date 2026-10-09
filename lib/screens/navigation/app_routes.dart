@@ -1,4 +1,6 @@
 import 'package:flutter_application_1/feature/todo/data/repositories/todo_repository_impl.dart';
+import 'package:flutter_application_1/feature/todo/ui/add_task/add_task_screen.dart';
+import 'package:flutter_application_1/feature/todo/ui/add_task/bloc/add_task_cubit.dart';
 import 'package:flutter_application_1/feature/todo/ui/bloc/todo_list_bloc.dart';
 import 'package:flutter_application_1/feature/todo/ui/todo_list_screen.dart';
 import 'package:flutter_application_1/screens/counter/bloc/counter_bloc.dart';
@@ -29,6 +31,13 @@ class AppRoutes {
       page: () => BlocProvider(
         create: (context) => TodoListBloc(TodoRepositoryImpl()),
         child: const TodoListScreen(),
+      ),
+    ),
+    GetPage(
+      name: NEW_TASK,
+      page: () => BlocProvider(
+        create: (context) => AddTaskCubit(TodoRepositoryImpl()),
+        child: const AddTaskScreen(),
       ),
     ),
   ];
