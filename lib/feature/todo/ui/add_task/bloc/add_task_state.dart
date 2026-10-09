@@ -21,10 +21,7 @@ class AddTaskState extends Equatable {
   });
 
   factory AddTaskState.initial() {
-    return AddTaskState(
-      status: Low(),
-      date: DateTime.now(),
-    );
+    return AddTaskState(status: Low(), date: DateTime.now());
   }
 
   AddTaskState copyWith({
@@ -47,11 +44,11 @@ class AddTaskState extends Equatable {
 
   @override
   List<Object?> get props => [
-        title,
-        body,
-        status,
-        date,
-        submissionStatus,
-        errorMessage,
-      ];
+    title,
+    body,
+    status,
+    date,
+    submissionStatus,
+    errorMessage,
+  ];
 }

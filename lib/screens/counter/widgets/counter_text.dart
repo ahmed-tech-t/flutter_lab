@@ -16,7 +16,11 @@ class CounterText extends StatelessWidget {
       child: Center(
         child: Text(
           counter.toString(),
-          style: context.theme.textTheme.bodyMedium,
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );

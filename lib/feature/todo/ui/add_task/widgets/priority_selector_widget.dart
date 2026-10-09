@@ -40,7 +40,10 @@ class PrioritySelectorWidget extends StatelessWidget {
                   color: isSelected ? status.color.withAlpha(30) : Colors.transparent,
                 ),
                 child: Center(
-                  child: StatusWidget(status: status),
+                  child: Opacity(
+                    opacity: isSelected ? 1.0 : 0.45,
+                    child: StatusWidget(status: status),
+                  ),
                 ),
               ),
             ),
@@ -50,3 +53,4 @@ class PrioritySelectorWidget extends StatelessWidget {
     );
   }
 }
+

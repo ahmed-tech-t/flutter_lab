@@ -86,10 +86,10 @@ class _ItemInfo extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style:
               theme.textTheme.bodyMedium?.copyWith(
-                color: Colors.black87,
+                color: Colors.white70,
                 decoration: decoration,
               ) ??
-              TextStyle(fontSize: 14, decoration: decoration),
+              TextStyle(fontSize: 14, decoration: decoration, color: Colors.white70),
         ),
         const SizedBox(height: AppSpacing.sm),
         Row(
@@ -102,9 +102,9 @@ class _ItemInfo extends StatelessWidget {
                 textAlign: TextAlign.end,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12,
-                  color: Colors.grey.shade700,
+                  color: Colors.white60,
                   fontWeight: FontWeight.w500,
                 ),
               ),

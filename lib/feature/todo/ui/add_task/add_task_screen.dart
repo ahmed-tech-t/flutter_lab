@@ -12,12 +12,28 @@ import 'package:intl/intl.dart';
 class AddTaskScreen extends StatelessWidget {
   const AddTaskScreen({super.key});
 
-  Future<void> _pickDate(BuildContext context, AddTaskCubit cubit, DateTime currentDate) async {
+  Future<void> _pickDate(
+    BuildContext context,
+    AddTaskCubit cubit,
+    DateTime currentDate,
+  ) async {
     final picked = await showDatePicker(
       context: context,
       initialDate: currentDate,
       firstDate: DateTime(2020),
       lastDate: DateTime(2035),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.dark(
+              primary: Colors.blueAccent,
+              surface: Color.fromARGB(255, 26, 14, 74),
+              onSurface: Colors.white,
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
     if (picked != null) {
       cubit.updateDate(picked);
@@ -29,7 +45,8 @@ class AddTaskScreen extends StatelessWidget {
     final cubit = context.read<AddTaskCubit>();
 
     return BlocConsumer<AddTaskCubit, AddTaskState>(
-      listenWhen: (previous, current) => previous.submissionStatus != current.submissionStatus,
+      listenWhen: (previous, current) =>
+          previous.submissionStatus != current.submissionStatus,
       listener: (context, state) {
         if (state.submissionStatus == TaskSubmissionStatus.success) {
           Get.back(result: true);
@@ -39,7 +56,8 @@ class AddTaskScreen extends StatelessWidget {
               backgroundColor: Colors.green,
             ),
           );
-        } else if (state.submissionStatus == TaskSubmissionStatus.failure && state.errorMessage != null) {
+        } else if (state.submissionStatus == TaskSubmissionStatus.failure &&
+            state.errorMessage != null) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.errorMessage!),
@@ -49,13 +67,11 @@ class AddTaskScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        final isLoading = state.submissionStatus == TaskSubmissionStatus.loading;
+        final isLoading =
+            state.submissionStatus == TaskSubmissionStatus.loading;
 
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Add New Task'),
-            centerTitle: true,
-          ),
+          appBar: AppBar(title: const Text('Add New Task'), centerTitle: true),
           body: SingleChildScrollView(
             padding: AppSpacing.screenPadding,
             child: Column(
@@ -66,19 +82,32 @@ class AddTaskScreen extends StatelessWidget {
                 // Title Input
                 Text(
                   'Task Title',
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.titleSmall
+                      ?.copyWith(fontWeight: FontWeight.bold, color: Colors.white),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 TextFormField(
                   initialValue: state.title,
                   onChanged: cubit.updateTitle,
                   enabled: !isLoading,
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                  cursorColor: Colors.blueAccent,
                   decoration: InputDecoration(
                     hintText: 'e.g. Complete Flutter lab',
+                    hintStyle: TextStyle(color: Colors.white.withAlpha(120)),
                     filled: true,
                     fillColor: Colors.white.withAlpha(20),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppSpacing.md),
+                      borderSide: BorderSide(color: Colors.white.withAlpha(50)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppSpacing.md),
+                      borderSide: BorderSide(color: Colors.white.withAlpha(50)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppSpacing.md),
+                      borderSide: const BorderSide(color: Colors.blueAccent, width: 1.5),
                     ),
                   ),
                 ),
@@ -88,7 +117,8 @@ class AddTaskScreen extends StatelessWidget {
                 // Description Input
                 Text(
                   'Description',
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.titleSmall
+                      ?.copyWith(fontWeight: FontWeight.bold, color: Colors.white),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 TextFormField(
@@ -96,12 +126,24 @@ class AddTaskScreen extends StatelessWidget {
                   onChanged: cubit.updateBody,
                   enabled: !isLoading,
                   maxLines: 3,
+                  style: const TextStyle(color: Colors.white, fontSize: 15),
+                  cursorColor: Colors.blueAccent,
                   decoration: InputDecoration(
                     hintText: 'Add details about this task...',
+                    hintStyle: TextStyle(color: Colors.white.withAlpha(120)),
                     filled: true,
                     fillColor: Colors.white.withAlpha(20),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppSpacing.md),
+                      borderSide: BorderSide(color: Colors.white.withAlpha(50)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppSpacing.md),
+                      borderSide: BorderSide(color: Colors.white.withAlpha(50)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppSpacing.md),
+                      borderSide: const BorderSide(color: Colors.blueAccent, width: 1.5),
                     ),
                   ),
                 ),
@@ -111,7 +153,8 @@ class AddTaskScreen extends StatelessWidget {
                 // Priority Selector
                 Text(
                   'Priority',
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.titleSmall
+                      ?.copyWith(fontWeight: FontWeight.bold, color: Colors.white),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 PrioritySelectorWidget(
@@ -124,29 +167,38 @@ class AddTaskScreen extends StatelessWidget {
                 // Due Date Tile
                 Text(
                   'Due Date',
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.titleSmall
+                      ?.copyWith(fontWeight: FontWeight.bold, color: Colors.white),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 InkWell(
-                  onTap: isLoading ? null : () => _pickDate(context, cubit, state.date),
+                  onTap: isLoading
+                      ? null
+                      : () => _pickDate(context, cubit, state.date),
                   borderRadius: BorderRadius.circular(AppSpacing.md),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.lg,
+                      vertical: AppSpacing.md,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white.withAlpha(20),
                       borderRadius: BorderRadius.circular(AppSpacing.md),
-                      border: Border.all(color: Colors.grey.shade400, width: 0.8),
+                      border: Border.all(
+                        color: Colors.white.withAlpha(50),
+                        width: 1.0,
+                      ),
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.calendar_today, size: 20),
+                        const Icon(Icons.calendar_today, size: 20, color: Colors.white),
                         const SizedBox(width: AppSpacing.md),
                         Text(
                           DateFormat('dd/MM/yyyy').format(state.date),
-                          style: const TextStyle(fontSize: 16),
+                          style: const TextStyle(fontSize: 16, color: Colors.white),
                         ),
                         const Spacer(),
-                        const Icon(Icons.arrow_drop_down),
+                        const Icon(Icons.arrow_drop_down, color: Colors.white70),
                       ],
                     ),
                   ),
@@ -161,6 +213,8 @@ class AddTaskScreen extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: isLoading ? null : cubit.submitTask,
                     style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueAccent,
+                      foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(AppSpacing.md),
                       ),
@@ -169,11 +223,18 @@ class AddTaskScreen extends StatelessWidget {
                         ? const SizedBox(
                             width: 24,
                             height: 24,
-                            child: CircularProgressIndicator(strokeWidth: 2.5),
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2.5,
+                              color: Colors.white,
+                            ),
                           )
                         : const Text(
                             'Save Task',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                   ),
                 ),
